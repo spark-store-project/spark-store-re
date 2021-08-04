@@ -28,8 +28,11 @@
     >
       <q-scroll-area style="height: calc(100% - 80px); margin-top: 80px; border-right: 1px solid #ddd">
         <q-list padding>
-          <template v-for="item in essentialLinks" :key="item.order">
-            <q-item clickable v-ripple>
+          <template v-for="item in essentialLinks" :key="item.title">
+            <q-item clickable
+                    v-ripple
+                    :to="item.link"
+            >
               <q-item-section avatar>
                 <q-icon :name="item.icon" />
               </q-item-section>
@@ -41,11 +44,11 @@
         </q-list>
       </q-scroll-area>
 
-      <q-img class="absolute-top" 
+      <q-img class="absolute-top"
         src="https://www.bing.com/th?id=OHR.PrathameshJaju_ZH-CN2207606082_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"
         style="height: 80px">
         <div class="absolute-bottom bg-transparent">
-          
+
           <q-toolbar-title>
             <q-avatar size="28px" class="q-mb-sm">
               <img src="https://www.spark-app.store/res/static/img/slogo.png">
@@ -67,87 +70,87 @@ import EssentialLink from 'components/EssentialLink.vue'
 const linksList = [
   {
     title: 'Home',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    caption: 'Home',
+    icon: 'home',
+    link: '/'
   },
   {
     title: 'Network',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    caption: 'network application',
+    icon: 'wifi',
+    link: '/list/network'
   },
   {
     title: 'Chat',
     caption: 'chat.quasar.dev',
     icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    link: '/list/relation'
   },
   {
     title: 'Music',
     caption: 'forum.quasar.dev',
     icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    link: '/list/music'
   },
   {
     title: 'Video',
     caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    icon: 'movie',
+    link: '/list/video'
   },
   {
     title: 'Graphics',
     caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
+    icon: 'image',
+    link: '/list/graphic'
   },
   {
     title: 'Games',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    icon: 'games',
+    link: '/list/game'
   },
   {
     title: 'Office',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    icon: 'work',
+    link: '/list/office'
   },
   {
     title: 'Reading',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    icon: 'book',
+    link: '/list/reading'
   },
   {
     title: 'Development',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    icon: 'code',
+    link: '/list/development'
   },
   {
     title: 'Tools',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    icon: 'code',
+    link: '/list/tool'
   },
   {
     title: 'Beautify',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    icon: 'code',
+    link: '/list/beautify'
   },
   {
     title: 'Others',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    icon: 'code',
+    link: '/list/other'
   },
   {
     title: 'Downloads',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    icon: 'download',
+    link: '/download'
   },
 ];
 
