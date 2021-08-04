@@ -14,14 +14,14 @@
               </template>
             </q-input>
           </div>
-          <q-btn style="-webkit-app-region: drag" flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-btn style="-webkit-app-region: drag" flat @click="drawer = !drawer" round dense icon="minimize" />
-          <q-btn style="-webkit-app-region: drag" flat @click="drawer = !drawer" round dense icon="maximize" />
-          <q-btn style="-webkit-app-region: drag" flat @click="drawer = !drawer" round dense icon="close" />
+          <q-btn style="-webkit-app-region: drag" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="menu" />
+          <q-btn style="-webkit-app-region: drag" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="minimize" />
+          <q-btn style="-webkit-app-region: drag" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="maximize" />
+          <q-btn style="-webkit-app-region: drag" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="close" />
         </q-toolbar>
     </q-header>
     <q-drawer
-      v-model="drawer"
+      v-model="leftDrawerOpen"
       show-if-above
       :width="200"
       :breakpoint="400"
@@ -59,7 +59,7 @@
       </q-img>
     </q-drawer>
     <q-page-container>
-      <router-view />
+      <router-view :key="$route.path" />
     </q-page-container>
   </q-layout>
 </template>
@@ -84,7 +84,7 @@ const linksList = [
     title: 'Chat',
     caption: 'chat.quasar.dev',
     icon: 'chat',
-    link: '/list/relation'
+    link: '/list/chat'
   },
   {
     title: 'Music',
@@ -102,13 +102,13 @@ const linksList = [
     title: 'Graphics',
     caption: '@QuasarFramework',
     icon: 'image',
-    link: '/list/graphic'
+    link: '/list/image_graphics'
   },
   {
     title: 'Games',
     caption: 'Community Quasar projects',
     icon: 'games',
-    link: '/list/game'
+    link: '/list/games'
   },
   {
     title: 'Office',
@@ -132,19 +132,19 @@ const linksList = [
     title: 'Tools',
     caption: 'Community Quasar projects',
     icon: 'code',
-    link: '/list/tool'
+    link: '/list/tools'
   },
   {
     title: 'Beautify',
     caption: 'Community Quasar projects',
-    icon: 'code',
-    link: '/list/beautify'
+    icon: 'cloud',
+    link: '/list/themes'
   },
   {
     title: 'Others',
     caption: 'Community Quasar projects',
     icon: 'code',
-    link: '/list/other'
+    link: '/list/others'
   },
   {
     title: 'Downloads',
