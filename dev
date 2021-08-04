@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+init() {
+    # install nvm, npm, quasar
+    # npm install
+    # install rustup, cargo
+    :
+}
+
+package() {
+    :
+}
+
+install() {
+    :
+}
+
+"$@"
