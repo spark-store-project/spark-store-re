@@ -2,8 +2,14 @@
   <q-layout view="lHh Lpr lff">
     <q-header class="native-window-draggable bg-white" elevated>
         <q-toolbar style="height: 80px;">
+          <q-btn flat round color="primary" icon="arrow_back" class="native-window-no-drag" />
+          <q-btn flat round color="primary" icon="arrow_forward"
+           class="native-window-no-drag"
+          />
+          <q-btn flat round color="primary" icon="refresh"
+           class="native-window-no-drag" />
           <div class="q-pa-md" style="max-width: 350px;">
-            <q-input style="-webkit-app-region: no-drag;"
+            <q-input class="native-window-no-drag"
               v-model="search"
               debounce="500"
               filled
@@ -14,10 +20,19 @@
               </template>
             </q-input>
           </div>
-          <q-btn style="-webkit-app-region: drag" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="menu" />
-          <q-btn style="-webkit-app-region: drag" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="minimize" />
-          <q-btn style="-webkit-app-region: drag" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="maximize" />
-          <q-btn style="-webkit-app-region: drag" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="close" />
+          <q-btn class="native-window-no-drag"
+                 color="primary" 
+                 push lable="upload" round icon="upload"
+          />
+          <q-btn class="native-window-no-drag"
+                 align="right"
+                 color="primary" flat
+                 round dense icon="menu"
+          />
+          <q-btn class="native-window-no-drag"
+                 align="right"
+                 color="primary"
+            flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="close" />
         </q-toolbar>
     </q-header>
     <q-drawer
@@ -83,13 +98,13 @@ const linksList = [
   {
     title: 'Chat',
     caption: 'chat.quasar.dev',
-    icon: 'chat',
+    icon: 'message',
     link: '/list/chat'
   },
   {
     title: 'Music',
     caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
+    icon: 'headphones',
     link: '/list/music'
   },
   {
@@ -125,25 +140,25 @@ const linksList = [
   {
     title: 'Development',
     caption: 'Community Quasar projects',
-    icon: 'code',
+    icon: 'coffee_maker',
     link: '/list/development'
   },
   {
     title: 'Tools',
     caption: 'Community Quasar projects',
-    icon: 'code',
+    icon: 'handyman',
     link: '/list/tools'
   },
   {
     title: 'Beautify',
     caption: 'Community Quasar projects',
-    icon: 'cloud',
+    icon: 'mood',
     link: '/list/themes'
   },
   {
     title: 'Others',
     caption: 'Community Quasar projects',
-    icon: 'code',
+    icon: 'alt_route',
     link: '/list/others'
   },
   {
@@ -151,6 +166,12 @@ const linksList = [
     caption: 'Community Quasar projects',
     icon: 'download',
     link: '/download'
+  },
+  {
+    title: 'Settings',
+    caption: 'Community Quasar projects',
+    icon: 'settings',
+    link: '/settings'
   },
 ];
 

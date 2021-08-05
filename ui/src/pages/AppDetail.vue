@@ -1,28 +1,68 @@
 <template>
+  <div class="q-pa-md row q-gutter-md">
 
-  <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card">
-      <q-img :src="details.icons"/>
-  <h5>{{details.Name}} </h5>
-  <p> {{details.Tags}} </p>
-  <p> {{details.Filename}} </p>
+    <q-card style="width:100%; max-width: 300px;">
+      <q-img :src="details.icons" width="180px" class="q-ml-lg" round align="center"/>
+
+      <q-card-section>
+        <div class="row no-wrap items-center">
+          <div class="col text-h6 ellipsis">
+            {{details.Name}}
+          </div>
+        </div>
+        <q-rating v-model="stars" :max="5" size="32px" />
+      </q-card-section>
+
+      <q-card-section class="q-pa-none">
+
+        <q-item clickable v-ripple>
+          <q-item-section>
+            <q-item-label>Official Site</q-item-label>
+            <q-item-label caption>{{details.Website}}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple>
+          <q-item-section>
+            <q-item-label>Author</q-item-label>
+            <q-item-label caption>{{details.Author}}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple>
+          <q-item-section>
+            <q-item-label>Contributor</q-item-label>
+            <q-item-label caption>{{details.Contributor}}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-actions align="center">
+        <q-btn push color="white" text-color="primary" label="Download" />
+      </q-card-actions>
     </q-card>
-    <q-card class="my-card">
+
+    <q-card style="width:100%; max-width: 350px;">
+
+      <q-card-section>
+        <div class="text-h6">Info</div>
+        <div class="text-subtitle2">{{details.More}}</div>
+      </q-card-section>
+
       <q-list>
 
         <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon color="primary" name="local_bar" />
-          </q-item-section>
           <q-item-section>
-            <q-item-label>PkgName</q-item-label>
-            <q-item-label caption>{{details.Pkgname}}</q-item-label>
+            <p> {{details.Tags}} </p>
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="primary" name="local_bar" />
+            <q-icon color="primary" name="label" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Version</q-item-label>
@@ -32,37 +72,27 @@
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="primary" name="local_bar" />
+            <q-icon color="primary" name="collections_bookmark" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Author</q-item-label>
-            <q-item-label caption>{{details.Author}}</q-item-label>
+            <q-item-label>Filename</q-item-label>
+            <q-item-label caption>{{details.Filename}}</q-item-label>
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon color="primary" name="local_bar" />
+            <q-icon color="primary" name="inventory_2" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Official Site</q-item-label>
-            <q-item-label caption>{{details.Website}}</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon color="red" name="local_gas_station" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Contributor</q-item-label>
-            <q-item-label caption>{{details.Contributor}}</q-item-label>
+            <q-item-label>PkgName</q-item-label>
+            <q-item-label caption>{{details.Pkgname}}</q-item-label>
           </q-item-section>
         </q-item>
 
         <q-item>
           <q-item-section avatar>
-            <q-icon color="red" name="local_gas_station" />
+            <q-icon color="red" name="pending_actions" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Update Time</q-item-label>
@@ -72,7 +102,7 @@
 
         <q-item>
           <q-item-section avatar>
-            <q-icon color="red" name="local_gas_station" />
+            <q-icon color="red" name="attach_file" />
           </q-item-section>
           <q-item-section>
             <q-item-label>File Size</q-item-label>
@@ -85,24 +115,30 @@
   </div>
 
 
-  <h5> Info </h5>
-  <p> {{details.More}} </p>
-  <h5> ScreenShot </h5>
-  <div class="q-pa-md" style="max-width: 700px">
+  <div class="col text-h6 ellipsis">
+     ScreenShot
+  </div>
+  <div class="q-pa-md" style="max-width: 800px">
     <q-carousel
-      swipeable
-      animated
       v-model="slide"
       v-model:fullscreen="fullscreen"
-      thumbnails
       infinite
+      transition-prev="jump-right"
+      transition-next="jump-left"
+      swipeable
+      animated
+      control-color="blue"
+      navigation
+      padding
+      arrows
+      height="400px"
     >
       <q-carousel-slide 
         v-for="(img,index) in images" 
         :key="index" 
         :name="index" 
-        :img-src="img" 
       >
+        <q-img :src="img" :fit="scale-down" :ratio="1" />
       </q-carousel-slide>
       <template v-slot:control>
         <q-carousel-control
@@ -119,7 +155,7 @@
     </q-carousel>
   </div>
 
-  <h5> Reviews </h5>
+  <h6> Reviews </h6>
 </template>
 
 <script>
