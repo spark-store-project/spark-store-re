@@ -17,21 +17,21 @@
 
         <q-item clickable v-ripple>
           <q-item-section>
-            <q-item-label>Official Site</q-item-label>
+            <q-item-label>{{$t("Official Site")}}</q-item-label>
             <q-item-label caption>{{details.Website}}</q-item-label>
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section>
-            <q-item-label>Author</q-item-label>
+            <q-item-label>{{$t("Author")}}</q-item-label>
             <q-item-label caption>{{details.Author}}</q-item-label>
           </q-item-section>
         </q-item>
 
         <q-item clickable v-ripple>
           <q-item-section>
-            <q-item-label>Contributor</q-item-label>
+            <q-item-label>{{$t("Contributor")}}</q-item-label>
             <q-item-label caption>{{details.Contributor}}</q-item-label>
           </q-item-section>
         </q-item>
@@ -41,14 +41,14 @@
       <q-separator />
 
       <q-card-actions align="center">
-        <q-btn push color="white" text-color="primary" label="Download" />
+        <q-btn push color="white" text-color="primary" :label='$t("Downloads")' />
       </q-card-actions>
     </q-card>
 
     <q-card style="width:100%; max-width: 350px;">
 
       <q-card-section>
-        <div class="text-h6">Info</div>
+        <div class="text-h6">{{$t("Info")}}</div>
         <div class="text-subtitle2">{{details.More}}</div>
       </q-card-section>
 
@@ -65,7 +65,7 @@
             <q-icon color="primary" name="label" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Version</q-item-label>
+            <q-item-label>{{$t("Version")}}</q-item-label>
             <q-item-label caption>{{details.Version}}</q-item-label>
           </q-item-section>
         </q-item>
@@ -75,7 +75,7 @@
             <q-icon color="primary" name="collections_bookmark" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Filename</q-item-label>
+            <q-item-label>{{$t("Filename")}}</q-item-label>
             <q-item-label caption>{{details.Filename}}</q-item-label>
           </q-item-section>
         </q-item>
@@ -85,7 +85,7 @@
             <q-icon color="primary" name="inventory_2" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>PkgName</q-item-label>
+            <q-item-label>{{$t("PkgName")}}</q-item-label>
             <q-item-label caption>{{details.Pkgname}}</q-item-label>
           </q-item-section>
         </q-item>
@@ -95,7 +95,7 @@
             <q-icon color="red" name="pending_actions" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Update Time</q-item-label>
+            <q-item-label>{{$t("Update Time")}}</q-item-label>
             <q-item-label caption>{{details.Update}}</q-item-label>
           </q-item-section>
         </q-item>
@@ -105,7 +105,7 @@
             <q-icon color="red" name="attach_file" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>File Size</q-item-label>
+            <q-item-label>{{$t("File Size")}}</q-item-label>
             <q-item-label caption>{{details.Size}}</q-item-label>
           </q-item-section>
         </q-item>
@@ -116,7 +116,7 @@
 
 
   <div class="col text-h6 ellipsis">
-     ScreenShot
+    {{$t("ScreenShot")}}
   </div>
   <div class="q-pa-md" style="max-width: 800px">
     <q-carousel
@@ -154,8 +154,7 @@
       </template>
     </q-carousel>
   </div>
-
-  <h6> Reviews </h6>
+  <h6> {{$t("Reviews")}} </h6>
 </template>
 
 <script>

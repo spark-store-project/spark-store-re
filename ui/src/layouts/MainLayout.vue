@@ -2,37 +2,45 @@
   <q-layout view="lHh Lpr lff">
     <q-header class="native-window-draggable bg-white" elevated>
         <q-toolbar style="height: 80px;">
+
           <q-btn flat round color="primary" icon="arrow_back" class="native-window-no-drag" />
-          <q-btn flat round color="primary" icon="arrow_forward"
-           class="native-window-no-drag"
-          />
-          <q-btn flat round color="primary" icon="refresh"
-           class="native-window-no-drag" />
-          <div class="q-pa-md" style="max-width: 350px;">
-            <q-input class="native-window-no-drag"
-              v-model="search"
-              debounce="500"
-              filled
-              placeholder="Search"
-            >
-              <template v-slot:prepend>
-                <q-icon name="search" />
-              </template>
-            </q-input>
-          </div>
+          <q-btn flat round color="primary" icon="arrow_forward" class="native-window-no-drag" />
+          <q-btn flat round color="primary" icon="refresh" class="native-window-no-drag" />
+
+        <q-toolbar-title>
+            <div class="q-px-lg" >
+              <q-input class="native-window-no-drag text-center justify-center centers"
+                v-model="search"
+                debounce="500"
+                filled
+                :placeholder="$t('Search')"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="search" />
+                </template>
+              </q-input>
+            </div>
+        </q-toolbar-title>
+
+          <q-btn class="native-window-no-drag q-px-lg"
+                 color="red-5" push
+                 icon="upload"
+          >
+          </q-btn>
+
+
           <q-btn class="native-window-no-drag"
                  color="primary" 
-                 push lable="upload" round icon="upload"
-          />
+                 flat round
+                 icon="download"
+          >
+            <q-badge floating color="red">2</q-badge>
+          </q-btn>
+
           <q-btn class="native-window-no-drag"
-                 align="right"
-                 color="primary" flat
-                 round dense icon="menu"
-          />
-          <q-btn class="native-window-no-drag"
-                 align="right"
                  color="primary"
-            flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="close" />
+                 round
+            flat @click="leftDrawerOpen = !leftDrawerOpen" icon="close" />
         </q-toolbar>
     </q-header>
     <q-drawer
@@ -68,7 +76,7 @@
             <q-avatar size="28px" class="q-mb-sm">
               <img src="https://www.spark-app.store/res/static/img/slogo.png">
             </q-avatar>
-            Spark Store
+            {{$t("Spark Store")}}
           </q-toolbar-title>
         </div>
       </q-img>
@@ -80,8 +88,6 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
 const linksList = [
   {
     title: 'Home',
@@ -165,15 +171,16 @@ const linksList = [
     title: 'Downloads',
     caption: 'Community Quasar projects',
     icon: 'download',
-    link: '/download'
+    link: '/management/download'
   },
   {
     title: 'Settings',
     caption: 'Community Quasar projects',
     icon: 'settings',
-    link: '/settings'
+    link: '/management/settings'
   },
 ];
+
 
 import { defineComponent, ref } from 'vue'
 
@@ -191,8 +198,25 @@ export default defineComponent({
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
     }
-  }
+  },
+  mounted() {
+    linksList[0].title = this.$t('Home');
+    linksList[1].title = this.$t('Network');
+    linksList[2].title = this.$t('Chat');
+    linksList[3].title = this.$t('Music');
+    linksList[4].title = this.$t('Video');
+    linksList[5].title = this.$t('Graphics');
+    linksList[6].title = this.$t('Games');
+    linksList[7].title = this.$t('Office');
+    linksList[8].title = this.$t('Reading');
+    linksList[9].title = this.$t('Development');
+    linksList[10].title = this.$t('Tools');
+    linksList[11].title = this.$t('Beautify');
+    linksList[12].title = this.$t('Others');
+    linksList[13].title = this.$t('Downloads');
+    linksList[14].title = this.$t('Settings');
+  },
 })
 </script>
