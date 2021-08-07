@@ -75,7 +75,7 @@
         </q-list>
       </q-scroll-area>
 
-      <q-img class="absolute-top"
+      <q-img class="absolute-top native-window-draggable"
         src="https://unsplash.com/photos/pZ-XFIrJMtE/download?force=true&w=640"
         style="height: 80px; width: 200px;"
       >

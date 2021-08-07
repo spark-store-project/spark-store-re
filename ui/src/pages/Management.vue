@@ -130,7 +130,7 @@
         icon="settings"
         :done="step > 1"
       >
-        {{$t('此教程能帮助用户一步一步完成应用上传')}}
+        {{$t('此助手能帮助用户一步一步完成应用上传')}}
 
         <q-stepper-navigation>
           <q-btn
@@ -220,7 +220,7 @@
                 </q-item-section>
               </q-item>
       <q-separator spaced />
-        <q-item-label header>{{$t('General')}}</q-item-label>
+        <q-item-label header>{{$t('General Setting')}}</q-item-label>
 
           <template
             v-for="(option, index) in booleanOptions"
