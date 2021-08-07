@@ -1,6 +1,3 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
   'Home': '主页',
   'Network': '网络',
@@ -32,4 +29,9 @@ export default {
   'Reviews' : '用户评论',
   'Uploads' : '上传',
   'Packaging' : '打包',
+  'General' : '通用',
+  'Foss Only' : '只看自由开源软件',
+  'Auto Update' : '自动更新软件',
+  'Enable Notification' : '开启消息通知',
+  'Become Our Peers' : '成为我们的同伴',
 }

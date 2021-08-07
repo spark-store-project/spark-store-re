@@ -26,7 +26,7 @@ export default defineComponent({
 
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 3px;
+  width: 0px;
 }
 
 *::-webkit-scrollbar-track {

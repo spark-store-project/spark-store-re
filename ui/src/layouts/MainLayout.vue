@@ -2,10 +2,17 @@
   <q-layout view="lHh Lpr lff">
     <q-header class="native-window-draggable bg-white" elevated>
         <q-toolbar style="height: 80px;">
-
-          <q-btn flat round color="primary" icon="arrow_back" class="native-window-no-drag" />
-          <q-btn flat round color="primary" icon="arrow_forward" class="native-window-no-drag" />
-          <q-btn flat round color="primary" icon="refresh" class="native-window-no-drag" />
+          <!-- TODO handle back/forward with disabled button state in app -->
+          <q-btn flat round color="primary" icon="arrow_back"
+            @click="linkNavFn(-1)"
+            class="native-window-no-drag"
+          />
+          <q-btn flat round color="primary" icon="arrow_forward"
+            @click="linkNavFn(1)"
+            class="native-window-no-drag"
+          />
+          <q-btn flat round color="primary" icon="refresh" @click="pageReloadFn" class="native-window-no-drag" />
+          <q-btn flat round color="primary" icon="home" to="/" class="native-window-no-drag" />
 
         <q-toolbar-title>
             <div class="q-px-lg" >
@@ -25,14 +32,15 @@
           <q-btn class="native-window-no-drag q-px-lg"
                  color="red-5" push
                  icon="upload"
+                 to="/management/uploads"
           >
           </q-btn>
 
 
           <q-btn class="native-window-no-drag"
-                 color="primary" 
-                 flat round
+                 color="primary" flat round
                  icon="download"
+                 to="/management/downloads"
           >
             <q-badge floating color="red">2</q-badge>
           </q-btn>
@@ -51,7 +59,7 @@
     >
       <q-scroll-area style="height: calc(100% - 80px); margin-top: 80px; border-right: 1px solid #ddd">
         <q-list padding>
-          <template v-for="item in essentialLinks" :key="item.title">
+          <template v-for="item in linksList" :key="item.title">
             <q-item clickable
                     v-ripple
                     :to="item.link"
@@ -60,7 +68,7 @@
                 <q-icon :name="item.icon" />
               </q-item-section>
               <q-item-section>
-                {{item.title}}
+                {{$t(item.title)}}
               </q-item-section>
             </q-item>
           </template>
@@ -68,10 +76,10 @@
       </q-scroll-area>
 
       <q-img class="absolute-top"
-        src="https://www.bing.com/th?id=OHR.PrathameshJaju_ZH-CN2207606082_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"
-        style="height: 80px">
+        src="https://unsplash.com/photos/pZ-XFIrJMtE/download?force=true&w=640"
+        style="height: 80px; width: 200px;"
+      >
         <div class="absolute-bottom bg-transparent">
-
           <q-toolbar-title>
             <q-avatar size="28px" class="q-mb-sm">
               <img src="https://www.spark-app.store/res/static/img/slogo.png">
@@ -90,10 +98,10 @@
 <script>
 const linksList = [
   {
-    title: 'Home',
-    caption: 'Home',
-    icon: 'home',
-    link: '/'
+    title: 'Games',
+    caption: 'Community Quasar projects',
+    icon: 'games',
+    link: '/list/games'
   },
   {
     title: 'Network',
@@ -124,12 +132,6 @@ const linksList = [
     caption: '@QuasarFramework',
     icon: 'image',
     link: '/list/image_graphics'
-  },
-  {
-    title: 'Games',
-    caption: 'Community Quasar projects',
-    icon: 'games',
-    link: '/list/games'
   },
   {
     title: 'Office',
@@ -168,12 +170,6 @@ const linksList = [
     link: '/list/others'
   },
   {
-    title: 'Downloads',
-    caption: 'Community Quasar projects',
-    icon: 'download',
-    link: '/management/download'
-  },
-  {
     title: 'Settings',
     caption: 'Community Quasar projects',
     icon: 'settings',
@@ -192,31 +188,25 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const linkNavFn = function(steps) {
+      this.$router.go(steps);
+    }
+    const pageReloadFn = function() {
+      this.$router.go(this.$router.currentRoute);
+    }
 
     return {
-      essentialLinks: linksList,
+      linksList,
+      linkNavFn,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
     }
   },
+  computed: {
+  },
   mounted() {
-    linksList[0].title = this.$t('Home');
-    linksList[1].title = this.$t('Network');
-    linksList[2].title = this.$t('Chat');
-    linksList[3].title = this.$t('Music');
-    linksList[4].title = this.$t('Video');
-    linksList[5].title = this.$t('Graphics');
-    linksList[6].title = this.$t('Games');
-    linksList[7].title = this.$t('Office');
-    linksList[8].title = this.$t('Reading');
-    linksList[9].title = this.$t('Development');
-    linksList[10].title = this.$t('Tools');
-    linksList[11].title = this.$t('Beautify');
-    linksList[12].title = this.$t('Others');
-    linksList[13].title = this.$t('Downloads');
-    linksList[14].title = this.$t('Settings');
   },
 })
 </script>

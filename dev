@@ -4,7 +4,22 @@ init() {
     # install nvm, npm, quasar
     # npm install
     # install rustup, cargo
-    :
+    sudo apt install debootstrap schroot
+    # prepare the schroot
+    mkdir -p debian
+    sudo cat > /etc/schroot/chroot.d/deabin11.conf <-EOF
+[debian11]
+description=Debian 11
+type=directory
+directory=$(realpath debian)
+root-users=robin
+users=robin
+EOF
+    sudo debootstrap --arch=amd64 bullseye $(realpath debian) http://ftp.debian.org/debian/
+    schroot -c debian11 cat > /etc//etc/apt/sources.list <-EOF
+deb http://ftp.us.debian.org/debian/ sid main
+deb-src http://ftp.us.debian.org/debian/ sid main
+EOF
 }
 
 package() {
