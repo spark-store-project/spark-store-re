@@ -74,7 +74,7 @@ export default {
 <style scoped>
 /*单个应用模块*/
 .item {
-  width: 300px;
+  width: 280px;
   height: 100px;
   float: left;
   transition: all 0.25s;

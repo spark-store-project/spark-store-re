@@ -13,6 +13,8 @@ export default {
   'Beautify': "美化",
   'Others': "其他",
   'Downloads' : "下载",
+  'Download' : "下载",
+  'Report' : "举报",
   'Settings' : "设置",
   'Search' : "搜索",
   'Spark Store' : "星火商店",

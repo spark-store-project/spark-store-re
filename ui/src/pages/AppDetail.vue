@@ -3,7 +3,9 @@
   <div class="q-gutter-md fit row wrap justify-start items-start content-start">
 
     <q-card class="col-md-4" style="width: 320px;" >
-      <q-img :src="details.icons" width="180px" class="q-ml-lg" round align="center"/>
+      <q-card-section>
+        <q-img :src="details.icons" width="120px" round />
+      </q-card-section>
       <q-card-section>
         <div class="row no-wrap items-center">
           <div class="col text-h6 ellipsis">
@@ -33,14 +35,17 @@
         </q-item>
       </q-card-section>
       <q-separator />
-      <q-card-actions align="center">
-        <q-btn push color="white" text-color="primary" :label='$t("Downloads")' />
+      <q-card-actions align="left">
+        <q-btn push color="white" style="min-width: 100px;" text-color="primary" :label='$t("Download")' />
+        <q-btn flat text-color="red-4" :label='$t("Report")' />
       </q-card-actions>
     </q-card>
 
     <q-card class="col-md-6" style="width: 425px; overflow: hidden; ">
       <q-card-section>
         <div class="text-h6">{{$t("Info")}}</div>
+      </q-card-section>
+      <q-card-section>
         <div class="text-subtitle2">{{details.More}}</div>
       </q-card-section>
       <q-list>
@@ -111,42 +116,42 @@
     <q-card-section>
       <div class="text-h6">{{$t("ScreenShot & Video")}}</div>
     </q-card-section>
-  <div class="q-pa-md" style="max-width: 800px">
-    <q-carousel
-      v-model="slide"
-      v-model:fullscreen="fullscreen"
-      infinite
-      transition-prev="jump-right"
-      transition-next="jump-left"
-      swipeable
-      animated
-      control-color="blue"
-      navigation
-      padding
-      arrows
-      height="400px"
-    >
-      <q-carousel-slide
-        v-for="(img,index) in images"
-        :key="index"
-        :name="index"
+    <div class="q-pb-md" style="max-width: 800px">
+      <q-carousel
+        v-model="slide"
+        v-model:fullscreen="fullscreen"
+        infinite
+        transition-prev="jump-right"
+        transition-next="jump-left"
+        swipeable
+        animated
+        control-color="blue"
+        navigation
+        padding
+        arrows
+        height="400px"
       >
-        <q-img :src="img" :fit="scale-down" :ratio="1" />
-      </q-carousel-slide>
-      <template v-slot:control>
-        <q-carousel-control
-          position="bottom-right"
-          :offset="[18, 18]"
+        <q-carousel-slide
+          v-for="(img,index) in images"
+          :key="index"
+          :name="index"
         >
-          <q-btn
-            push round dense color="white" text-color="primary"
-            :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
-            @click="fullscreen = !fullscreen"
-          />
-        </q-carousel-control>
-      </template>
-    </q-carousel>
-  </div>
+          <q-img :src="img"/>
+        </q-carousel-slide>
+        <template v-slot:control>
+          <q-carousel-control
+            position="bottom-right"
+            :offset="[18, 18]"
+          >
+            <q-btn
+              push round dense color="white" text-color="primary"
+              :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
+              @click="fullscreen = !fullscreen"
+            />
+          </q-carousel-control>
+        </template>
+      </q-carousel>
+    </div>
   </q-card>
   </div>
   </div>
@@ -172,6 +177,7 @@ export default {
           list: [],
           details: {},
           images: [],
+          stars: ref(3),
           source: "https://json.jerrywang.top",
           imgSource: "https://cdn.jsdelivr.net/gh/Jerrywang959/jsonpng",
           slide: ref(0),
@@ -188,15 +194,15 @@ export default {
               // TODO 需要更多error handling
               this.details = res.data;
               if (!res.data.img_urls) {
-                this.images = [ "https://cdn.quasar.dev/img/mountains.jpg" ];
+                this.images = [ "https://unsplash.com/photos/JpTY4gUviJM/download?force=true&w=640" ];
               } else {
                 this.images = JSON.parse(res.data.img_urls);
                 if (!this.images) {
-                  this.images = [ "https://cdn.quasar.dev/img/mountains.jpg" ];
+                  this.images = [ "https://unsplash.com/photos/JpTY4gUviJM/download?force=true&w=640" ];
                 }
               }
-              console.log(this.details);
-              console.log(this.images, typeof(this.images), this.images.length);
+              console.log("details", this.details);
+              console.log("images", this.images, typeof(this.images), this.images.length);
             });
         },
     },

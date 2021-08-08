@@ -192,12 +192,15 @@ export default defineComponent({
       this.$router.go(steps);
     }
     const pageReloadFn = function() {
-      this.$router.go(this.$router.currentRoute);
+      window.location.reload();
+      // this.$router.go(this.$router.currentRoute);
     }
-
+    const search = ref("");
     return {
       linksList,
       linkNavFn,
+      pageReloadFn,
+      search,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
