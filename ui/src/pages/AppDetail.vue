@@ -1,9 +1,9 @@
 <template>
-  <div class="q-pa-md row q-gutter-md">
+  <div class="q-pa-md">
+  <div class="q-gutter-md fit row wrap justify-start items-start content-start">
 
-    <q-card style="width:100%; max-width: 300px;">
+    <q-card class="col-md-4" style="width: 320px;" >
       <q-img :src="details.icons" width="180px" class="q-ml-lg" round align="center"/>
-
       <q-card-section>
         <div class="row no-wrap items-center">
           <div class="col text-h6 ellipsis">
@@ -12,48 +12,38 @@
         </div>
         <q-rating v-model="stars" :max="5" size="32px" />
       </q-card-section>
-
       <q-card-section class="q-pa-none">
-
         <q-item clickable v-ripple>
           <q-item-section>
             <q-item-label>{{$t("Official Site")}}</q-item-label>
             <q-item-label caption>{{details.Website}}</q-item-label>
           </q-item-section>
         </q-item>
-
         <q-item clickable v-ripple>
           <q-item-section>
             <q-item-label>{{$t("Author")}}</q-item-label>
             <q-item-label caption>{{details.Author}}</q-item-label>
           </q-item-section>
         </q-item>
-
         <q-item clickable v-ripple>
           <q-item-section>
             <q-item-label>{{$t("Contributor")}}</q-item-label>
             <q-item-label caption>{{details.Contributor}}</q-item-label>
           </q-item-section>
         </q-item>
-
       </q-card-section>
-
       <q-separator />
-
       <q-card-actions align="center">
         <q-btn push color="white" text-color="primary" :label='$t("Downloads")' />
       </q-card-actions>
     </q-card>
 
-    <q-card style="width:100%; max-width: 350px;">
-
+    <q-card class="col-md-6" style="width: 425px; overflow: hidden; ">
       <q-card-section>
         <div class="text-h6">{{$t("Info")}}</div>
         <div class="text-subtitle2">{{details.More}}</div>
       </q-card-section>
-
       <q-list>
-
         <q-item clickable v-ripple>
           <q-item-section>
             <p> {{details.Tags}} </p>
@@ -113,11 +103,14 @@
       </q-list>
     </q-card>
   </div>
-
-
-  <div class="col text-h6 ellipsis">
-    {{$t("ScreenShot")}}
   </div>
+
+  <div class="q-pa-md">
+  <div class="q-gutter-md fit row wrap justify-start items-start content-start" >
+  <q-card class="col" style="min-width: 320px; max-width: 760px; ">
+    <q-card-section>
+      <div class="text-h6">{{$t("ScreenShot & Video")}}</div>
+    </q-card-section>
   <div class="q-pa-md" style="max-width: 800px">
     <q-carousel
       v-model="slide"
@@ -133,10 +126,10 @@
       arrows
       height="400px"
     >
-      <q-carousel-slide 
-        v-for="(img,index) in images" 
-        :key="index" 
-        :name="index" 
+      <q-carousel-slide
+        v-for="(img,index) in images"
+        :key="index"
+        :name="index"
       >
         <q-img :src="img" :fit="scale-down" :ratio="1" />
       </q-carousel-slide>
@@ -154,7 +147,18 @@
       </template>
     </q-carousel>
   </div>
-  <h6> {{$t("Reviews")}} </h6>
+  </q-card>
+  </div>
+  </div>
+  <div class="q-pa-md">
+  <div class="q-gutter-md fit row wrap justify-start items-start content-start" >
+  <q-card class="col" style="min-width: 320px; max-width: 760px;">
+    <q-card-section>
+      <div class="text-h6">{{$t("Reviews")}}</div>
+    </q-card-section>
+  </q-card>
+  </div>
+  </div>
 </template>
 
 <script>

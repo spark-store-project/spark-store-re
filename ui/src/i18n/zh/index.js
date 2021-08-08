@@ -24,7 +24,7 @@ export default {
   'Author' : "作者",
   'Contributor' : "贡献者",
   'Official Site' : "官网",
-  'ScreenShot' : '视图介绍',
+  'ScreenShot & Video' : '截图与视频',
   'Info' : '详细介绍',
   'Reviews' : '用户评论',
   'Uploads' : '上传',
