@@ -57,7 +57,7 @@ export default {
                 });
         },
         GotoJson(pkgn) {
-          let detailsUri=`${this.source}/store/${this.category}/${pkgn}/app.json`;
+          let detailsUri=`${this.source}/store/${this.category}/${pkgn}/`;
           let base64encode= window.btoa(detailsUri);
           console.log(detailsUri, base64encode);
           this.$router.push({path: `/details/${base64encode}`})

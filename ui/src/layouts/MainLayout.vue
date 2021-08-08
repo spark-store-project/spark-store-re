@@ -14,20 +14,35 @@
           <q-btn flat round color="primary" icon="refresh" @click="pageReloadFn" class="native-window-no-drag" />
           <q-btn flat round color="primary" icon="home" to="/" class="native-window-no-drag" />
 
-        <q-toolbar-title>
-            <div class="q-px-lg" >
-              <q-input class="native-window-no-drag text-center justify-center centers"
-                v-model="search"
-                debounce="500"
-                filled
-                :placeholder="$t('Search')"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="search" />
-                </template>
-              </q-input>
-            </div>
-        </q-toolbar-title>
+          <q-toolbar-title>
+            <div class="q-px-lg">
+                <q-input class="native-window-no-drag text-center justify-center centers"
+                  v-model="search"
+                  debounce="500"
+                  filled
+                  :placeholder="$t('Search')"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="search" />
+                  </template>
+                  <q-menu fit>
+                    <q-list style="min-width: 100px">
+                      <q-item clickable>
+                        <q-item-section> AppName1-AppDescription-AppIcon </q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item clickable>
+                        <q-item-section> AppName2-AppDescription-AppIcon </q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item clickable>
+                        <q-item-section> AppName3-AppDescription-AppIcon </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-menu>
+                </q-input>
+              </div>
+          </q-toolbar-title>
 
           <q-btn class="native-window-no-drag q-px-lg"
                  color="red-5" push

@@ -4,7 +4,7 @@
 
     <q-card class="col-md-4" style="width: 320px;" >
       <q-card-section>
-        <q-img :src="details.icons" width="120px" round />
+        <q-img :src="icon_png" width="120px" round />
       </q-card-section>
       <q-card-section>
         <div class="row no-wrap items-center">
@@ -175,6 +175,7 @@ export default {
     data() {
         return {
           list: [],
+          icon_png: window.atob(this.$route.params.app) + 'icon.png',
           details: {},
           images: [],
           stars: ref(3),
@@ -186,19 +187,28 @@ export default {
     },
     methods: {
         getInfo() {
-          let detailsUri = window.atob(this.$route.params.app);
-          console.log(detailsUri);
-          //applist.json 软件详情
-          axios.get(detailsUri)
+          let base_url = window.atob(this.$route.params.app);
+          let app_json =  window.atob(this.$route.params.app) + 'app.json';
+          let screen_1_png = window.atob(this.$route.params.app) + 'screen_1.png';
+          // console.log(base_url);
+          // console.log(app_json);
+          // applist.json 软件详情
+          axios.get(app_json)
             .then((res) => {
               // TODO 需要更多error handling
               this.details = res.data;
               if (!res.data.img_urls) {
-                this.images = [ "https://unsplash.com/photos/JpTY4gUviJM/download?force=true&w=640" ];
+                this.images = [ screen_1_png ];
               } else {
                 this.images = JSON.parse(res.data.img_urls);
                 if (!this.images) {
-                  this.images = [ "https://unsplash.com/photos/JpTY4gUviJM/download?force=true&w=640" ];
+                  this.images = [ screen_1_png ];
+                } else  {
+                  let list = [...Array(this.images.length).keys()];
+                  this.images = [];
+                  list.forEach(n => {
+                    this.images.push( base_url + 'screen_'+(n+1)+'.png' );
+                  });
                 }
               }
               console.log("details", this.details);
