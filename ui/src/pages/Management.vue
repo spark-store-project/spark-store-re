@@ -118,79 +118,81 @@
           </q-tab-panel>
 
           <q-tab-panel name="packaging">
-                <q-stepper
-      v-model="step"
-      vertical
-      color="primary"
-      animated
-    >
-      <q-step
-        :name="1"
-        :title="$t('Introduction to application packaging')"
-        icon="settings"
-        :done="step > 1"
-      >
-        {{$t('此助手能帮助用户一步一步完成应用上传')}}
+            <q-stepper
+              v-model="step"
+              vertical
+              flat
+              class="bg-grey-1"
+              color="primary"
+              animated
+            >
+              <q-step
+                :name="1"
+                :title="$t('Introduction to application packaging')"
+                icon="settings"
+                :done="step > 1"
+              >
+                {{$t('此助手能帮助用户一步一步完成应用上传')}}
 
-        <q-stepper-navigation>
-          <q-btn
-            @click="step = 2"
-            color="primary"
-            :label="$t('Continue')"
-          />
-        </q-stepper-navigation>
-      </q-step>
+                <q-stepper-navigation>
+                  <q-btn
+                    @click="step = 2"
+                    color="primary"
+                    :label="$t('Continue')"
+                  />
+                </q-stepper-navigation>
+              </q-step>
 
-      <q-step
-        :name="2"
-        title="Create an ad group"
-        caption="Optional"
-        icon="create_new_folder"
-        :done="step > 2"
-      >
-        An ad group contains one or more ads which target a shared set of keywords.
+              <q-step
+                :name="2"
+                title="Create an ad group"
+                caption="Optional"
+                icon="create_new_folder"
+                :done="step > 2"
+              >
+                An ad group contains one or more ads which target a shared set of keywords.
 
-        <q-stepper-navigation>
-          <q-btn @click="step = 4"
-            color="primary"
-            :label="$t('Continue')"
-          />
-          <q-btn flat @click="step = 1" color="primary"
-            :label="$t('Back')"
-            class="q-ml-sm"
-          />
-        </q-stepper-navigation>
-      </q-step>
+                <q-stepper-navigation>
+                  <q-btn @click="step = 4"
+                    color="primary"
+                    :label="$t('Continue')"
+                  />
+                  <q-btn flat @click="step = 1" color="primary"
+                    :label="$t('Back')"
+                    class="q-ml-sm"
+                  />
+                </q-stepper-navigation>
+              </q-step>
 
-      <q-step
-        :name="3"
-        title="Ad template"
-        icon="assignment"
-        disable
-      >
-        This step won't show up because it is disabled.
-      </q-step>
+              <q-step
+                :name="3"
+                title="Ad template"
+                icon="assignment"
+                disable
+              >
+                This step won't show up because it is disabled.
+              </q-step>
 
-      <q-step
-        :name="4"
-        title="Create an ad"
-        icon="add_comment"
-      >
-        Try out different ad text to see what brings in the most customers, and learn how to
-        enhance your ads using features like ad extensions. If you run into any problems with
-        your ads, find out how to tell if they're running and how to resolve approval issues.
+              <q-step
+                :name="4"
+                title="Create an ad"
+                icon="add_comment"
+              >
+                Try out different ad text to see what brings in the most customers, and learn how to
+                enhance your ads using features like ad extensions. If you run into any problems with
+                your ads, find out how to tell if they're running and how to resolve approval issues.
 
-        <q-stepper-navigation>
-          <q-btn color="primary" :label="$t('Upload')" />
-          <q-btn flat
-            @click="step = 2"
-            color="primary"
-            class="q-ml-sm"
-            :label="$t('Back')"
-          />
-        </q-stepper-navigation>
-      </q-step>
-    </q-stepper>
+                <q-stepper-navigation>
+                  <q-btn color="primary" :label="$t('Upload')" />
+                  <q-btn flat
+                    @click="step = 2"
+                    color="primary"
+                    class="q-ml-sm"
+                    :label="$t('Back')"
+                  />
+                </q-stepper-navigation>
+              </q-step>
+            </q-stepper>
           </q-tab-panel>
 
           <q-tab-panel name="settings">
@@ -198,6 +200,7 @@
               <q-item-label header>
                 {{$t('App Control')}}
               </q-item-label>
+
               <q-item clickable v-ripple>
                 <q-item-section>
                   <q-item-label>
@@ -219,7 +222,8 @@
                   </q-item-label>
                 </q-item-section>
               </q-item>
-      <q-separator spaced />
+
+        <q-separator spaced />
         <q-item-label header>{{$t('General Setting')}}</q-item-label>
 
           <template
@@ -240,11 +244,11 @@
           </template>
 
           <q-separator spaced />
-          <q-item-label header>Notifications</q-item-label>
-
+          <q-item-label header>{{$t("Privacy Setting")}}</q-item-label>
           <q-item tag="label" v-ripple>
             <q-item-section>
-              <q-item-label>Disk Space too low</q-item-label>
+              <q-item-label>{{$t("App Can See the Home Folder")}}</q-item-label>
+              <q-item-label caption>{{$t("Home folder contains desktop files, personal settings")}}</q-item-label>
             </q-item-section>
             <q-item-section side >
               <q-toggle color="blue" v-model="notif1" val="battery" />
@@ -253,8 +257,8 @@
 
           <q-item tag="label" v-ripple>
             <q-item-section>
-              <q-item-label>Friend request</q-item-label>
-              <q-item-label caption>Allow notification</q-item-label>
+              <q-item-label>{{$t("App Uses the same graphic context")}}</q-item-label>
+              <q-item-label caption>{{$t("In the same X graphic context, app can see all your inputs, screens etc")}}</q-item-label>
             </q-item-section>
             <q-item-section side top>
               <q-toggle color="green" v-model="notif2" val="friend" />
@@ -263,8 +267,8 @@
 
           <q-item tag="label" v-ripple>
             <q-item-section>
-              <q-item-label>Picture uploaded</q-item-label>
-              <q-item-label caption>Allow notification when uploading images</q-item-label>
+              <q-item-label>{{$t("App Uses the same default sandbox")}} </q-item-label>
+              <q-item-label caption>{{$t("use same sanbox makes backup easier")}}</q-item-label>
             </q-item-section>
             <q-item-section side top>
               <q-toggle color="red" v-model="notif3" val="picture" />
@@ -354,8 +358,14 @@ const booleanOptions = [
       subtitle: "Enable Peer to Peer (P2P) Download/Upload",
       enabled: false,
     },
+    {
+      title: "Enable the background process",
+      subtitle: "With background process alive, you can continue to download even when window is closed",
+      enabled: false,
+    },
 ];
 const booleanValue = [
+      false,
       false,
       false,
       false,

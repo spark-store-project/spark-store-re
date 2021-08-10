@@ -9,6 +9,17 @@ try {
 
 let mainWindow
 
+function startService() {
+  /* start the spark-store-rust prorgam to
+   * listen on a local port (7800) and
+   * serve on a websocket address.
+   * The process handles:
+   * 1. Implement Downloads
+   * 2. Implement App Instllation, desktop files, exec etc
+   * 3. Handle App Deletion and Others
+   */
+}
+
 function createWindow () {
   /**
    * Initial window options
