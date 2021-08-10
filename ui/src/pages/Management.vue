@@ -223,16 +223,20 @@
                 </q-item-section>
               </q-item>
 
-        <q-separator spaced />
-        <q-item-label header>{{$t('General Setting')}}</q-item-label>
+          <q-separator spaced />
 
+          <q-item-label header>{{$t('General Setting')}}</q-item-label>
           <template
-            v-for="(option, index) in booleanOptions"
+            v-for="option,index in $store.state.settings.generalSetting"
             :key="option.title"
           >
           <q-item tag="label" v-ripple>
             <q-item-section side top>
-              <q-checkbox v-model="booleanValue[index]" />
+              <!-- since we are manipulateing element in an array, we have to do v-model update ourselves -->
+              <q-checkbox
+                :model-value="option.enabled"
+                @update:model-value="v => $store.commit('settings/toggleGeneralSetting', index)"
+              />
             </q-item-section>
             <q-item-section>
               <q-item-label>{{$t(option.title)}}</q-item-label>
@@ -244,40 +248,29 @@
           </template>
 
           <q-separator spaced />
+
           <q-item-label header>{{$t("Privacy Setting")}}</q-item-label>
+          <template
+            v-for="option,index in $store.state.settings.privacySetting"
+            :key="option.title"
+          >
           <q-item tag="label" v-ripple>
             <q-item-section>
-              <q-item-label>{{$t("App Can See the Home Folder")}}</q-item-label>
-              <q-item-label caption>{{$t("Home folder contains desktop files, personal settings")}}</q-item-label>
+              <q-item-label>{{$t(option.title)}}</q-item-label>
+              <q-item-label caption>{{$t(option.subtitle)}}</q-item-label>
             </q-item-section>
             <q-item-section side >
-              <q-toggle color="blue" v-model="notif1" val="battery" />
+              <q-toggle color="blue" val="battery"
+                :model-value="option.enabled"
+                @update:model-value="v => $store.commit('settings/togglePrivacySetting', index)"
+              />
             </q-item-section>
           </q-item>
-
-          <q-item tag="label" v-ripple>
-            <q-item-section>
-              <q-item-label>{{$t("App Uses the same graphic context")}}</q-item-label>
-              <q-item-label caption>{{$t("In the same X graphic context, app can see all your inputs, screens etc")}}</q-item-label>
-            </q-item-section>
-            <q-item-section side top>
-              <q-toggle color="green" v-model="notif2" val="friend" />
-            </q-item-section>
-          </q-item>
-
-          <q-item tag="label" v-ripple>
-            <q-item-section>
-              <q-item-label>{{$t("App Uses the same default sandbox")}} </q-item-label>
-              <q-item-label caption>{{$t("use same sanbox makes backup easier")}}</q-item-label>
-            </q-item-section>
-            <q-item-section side top>
-              <q-toggle color="red" v-model="notif3" val="picture" />
-            </q-item-section>
-          </q-item>
+          </template>
 
           <q-separator spaced />
-          <q-item-label header>Other settings</q-item-label>
 
+          <q-item-label header>Other settings</q-item-label>
           <q-item>
             <q-item-section side>
               <q-icon color="teal" name="volume_down" />
@@ -324,7 +317,7 @@
               />
             </q-item-section>
           </q-item>
-    </q-list>
+          </q-list>
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
@@ -336,41 +329,7 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue';
-
-const booleanOptions = [
-    {
-      title: "Foss Only",
-      subtitle: "Install only the free and open source software",
-      enabled: false,
-    },
-    {
-      title: "Auto Update",
-      subtitle: "Enable the auto update once the store is started",
-      enabled: false,
-    },
-    {
-      title: "Enable Notification",
-      subtitle: "Allow Notification for various events",
-      enabled: false,
-    },
-    {
-      title: "Become Our Peers",
-      subtitle: "Enable Peer to Peer (P2P) Download/Upload",
-      enabled: false,
-    },
-    {
-      title: "Enable the background process",
-      subtitle: "With background process alive, you can continue to download even when window is closed",
-      enabled: false,
-    },
-];
-const booleanValue = [
-      false,
-      false,
-      false,
-      false,
-      false,
-];
+import { useStore } from 'vuex';
 
 const downloadList = [
   {
@@ -394,6 +353,7 @@ export default defineComponent({
     name: 'Management',
     setup() {
       const progress = ref(0.7);
+      const $store = useStore();
       return {
         notif1: ref(true),
         notif2: ref(true),
@@ -404,8 +364,6 @@ export default defineComponent({
         step: ref(1),
         progress,
         progressLabel: computed(() => (progress.value * 100).toFixed(2) + '%'),
-        booleanOptions,
-        booleanValue,
         downloadList,
         uploadList,
      }
