@@ -2,6 +2,11 @@
   <q-layout view="lHh Lpr lff">
     <q-header class="native-window-draggable bg-white" elevated>
         <q-toolbar style="height: 80px;">
+          <q-btn class="native-window-no-drag"
+                 color="primary"
+                 round flat
+                 @click="leftDrawerOpen = !leftDrawerOpen" icon="menu"
+          />
           <!-- TODO handle back/forward with disabled button state in app -->
           <q-btn flat round color="primary" icon="arrow_back"
             @click="linkNavFn(-1)"
@@ -13,6 +18,15 @@
           />
           <q-btn flat round color="primary" icon="refresh" @click="pageReloadFn" class="native-window-no-drag" />
           <q-btn flat round color="primary" icon="home" to="/" class="native-window-no-drag" />
+          <q-btn class="native-window-no-drag"
+                 color="primary" flat round
+                 icon="download"
+                 to="/management/downloads"
+          >
+            <q-badge floating color="red">
+              {{$store.state.downloads.tasks.length}}
+            </q-badge>
+          </q-btn>
 
           <q-toolbar-title>
             <div class="q-px-lg">
@@ -47,23 +61,9 @@
           <q-btn class="native-window-no-drag q-px-lg"
                  color="red-5" push
                  icon="upload"
-                 to="/management/uploads"
+                 to="/management/packaging"
           >
           </q-btn>
-
-
-          <q-btn class="native-window-no-drag"
-                 color="primary" flat round
-                 icon="download"
-                 to="/management/downloads"
-          >
-            <q-badge floating color="red">2</q-badge>
-          </q-btn>
-
-          <q-btn class="native-window-no-drag"
-                 color="primary"
-                 round
-            flat @click="leftDrawerOpen = !leftDrawerOpen" icon="close" />
         </q-toolbar>
     </q-header>
     <q-drawer

@@ -4,7 +4,7 @@
 
     <q-card class="col-md-4" style="width: 320px;" >
       <q-card-section>
-        <q-img :src="icon_png" width="120px" round />
+        <q-img :src="icon_url" width="120px" round />
       </q-card-section>
       <q-card-section>
         <div class="row no-wrap items-center">
@@ -36,7 +36,12 @@
       </q-card-section>
       <q-separator />
       <q-card-actions align="left">
-        <q-btn push color="white" style="min-width: 100px;" text-color="primary" :label='$t("Download")' />
+        <q-btn push color="white"
+          style="min-width: 100px;"
+          text-color="primary"
+          :label='$t("Download")'
+          @click="clickToDownload(details)"
+        />
         <q-btn flat text-color="red-4" :label='$t("Report")' />
       </q-card-actions>
     </q-card>
@@ -175,20 +180,20 @@ export default {
     data() {
         return {
           list: [],
-          icon_png: window.atob(this.$route.params.app) + 'icon.png',
+          base_url: window.atob(this.$route.params.app),
+          icon_url: window.atob(this.$route.params.app) + 'icon.png',
           details: {},
           images: [],
           stars: ref(3),
-          source: "https://json.jerrywang.top",
-          imgSource: "https://cdn.jsdelivr.net/gh/Jerrywang959/jsonpng",
           slide: ref(0),
           fullscreen: ref(false),
         };
     },
     methods: {
         getInfo() {
-          let base_url = window.atob(this.$route.params.app);
+          let base_url =  window.atob(this.$route.params.app);
           let app_json =  window.atob(this.$route.params.app) + 'app.json';
+          let icon_png =  window.atob(this.$route.params.app) + 'icon.png';
           let screen_1_png = window.atob(this.$route.params.app) + 'screen_1.png';
           // console.log(base_url);
           // console.log(app_json);
@@ -197,6 +202,9 @@ export default {
             .then((res) => {
               // TODO 需要更多error handling
               this.details = res.data;
+              this.details.base_url = base_url;
+              this.details.icon_url = icon_png;
+              this.details.file_url = base_url + res.data.Filename;
               if (!res.data.img_urls) {
                 this.images = [ screen_1_png ];
               } else {
@@ -215,6 +223,10 @@ export default {
               console.log("images", this.images, typeof(this.images), this.images.length);
             });
         },
+        clickToDownload(details) {
+          this.$store.dispatch('downloads/downloadTaskAdd', details)
+          this.$router.push('/management/downloads');
+        }
     },
     mounted() {
         this.getInfo();
@@ -224,24 +236,3 @@ export default {
     },
 };
 </script>
-<style scoped>
-/*单个应用模块*/
-.item {
-  width: 300px;
-  height: 100px;
-  float: left;
-  transition: all 0.25s;
-  margin: 15px;
-  color: #6d6d6d;
-  border-radius: 18px;
-  background-color: #F4F4F6;
-  -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-.item:hover {
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  -webkit-transform: scale(1.07, 1.07);
-  transform: scale(1.07, 1.07);
-}
-</style>

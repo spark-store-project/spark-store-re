@@ -11,7 +11,7 @@
           indicator-color="primary"
           align="justify"
         >
-          <q-tab name="downloads" :label="$t('Downloads')" to="/management/downlos"   />
+          <q-tab name="downloads" :label="$t('Downloads')" to="/management/downlods"   />
           <q-tab name="uploads" :label="$t('Uploads')"     to="/management/uploads"   />
           <q-tab name="packaging" :label="$t('Packaging')" to="/management/packaging" />
           <q-tab name="settings" :label="$t('Settings')"   to="/management/settings"  />
@@ -19,17 +19,16 @@
 
         <q-tab-panels v-model="tab" animated class="bg-grey-1">
           <q-tab-panel name="downloads">
-
-           <q-list bordered class="rounded-borders">
-           <template v-for="(item, index) in downloadList" :key="item.name">
+           <q-list>
+           <template v-for="task, index in $store.state.downloads.tasks" :key="task.name">
              <!-- smart tricks, put seperator at top -->
              <q-separator spaced v-if="index !=0"/>
              <q-item>
                <q-item-section avatar top>
-                 <q-icon name="account_tree" color="black" size="34px" />
+                 <q-img :src="task.details.icon_url" width="38px" />
                </q-item-section>
                <q-item-section top class="col-2 gt-sm">
-                 <q-item-label class="q-mt-sm">应用名字</q-item-label>
+                 <q-item-label class="q-mt-sm">{{$t(task.details.Name)}}</q-item-label>
                </q-item-section>
                <q-item-section top>
                  <q-linear-progress
@@ -37,17 +36,23 @@
                    round
                    size="25px"
                    color="green-4"
-                   :value="progress"
+                   :value="task.progress"
                  >
                    <div class="absolute-full flex flex-center">
-                     <q-badge color="white" text-color="green-4" :label="progressLabel" />
+                     <q-badge color="white" text-color="green-4" :label="task.progressLabel" />
                    </div>
                  </q-linear-progress>
                  <q-item-label caption lines="1">
+                   Download: {{task.downloadSpeed}} B/s
+                 </q-item-label>
+                 <q-item-label caption lines="1">
+                   Upload: {{task.uploadSpeed}} B/s
                    感觉速度不够快? 设置中开启P2P下载
                  </q-item-label>
-                 <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold
-                   text-primary text-uppercase">
+                 <q-item-label
+                   lines="1"
+                   class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase"
+                 >
                    <span class="cursor-pointer">
                      {{$t('Open in Folder')}}
                    </span>
@@ -62,8 +67,7 @@
                </q-item-section>
              </q-item>
            </template>
-         </q-list>
-
+           </q-list>
           </q-tab-panel>
 
           <q-tab-panel name="uploads">
@@ -331,15 +335,6 @@
 import { defineComponent, ref, computed } from 'vue';
 import { useStore } from 'vuex';
 
-const downloadList = [
-  {
-    name : "AppName1",
-  },
-  {
-    name : "AppName2",
-  },
-];
-
 const uploadList = [
   {
     name : "AppName1",
@@ -364,7 +359,6 @@ export default defineComponent({
         step: ref(1),
         progress,
         progressLabel: computed(() => (progress.value * 100).toFixed(2) + '%'),
-        downloadList,
         uploadList,
      }
     },
