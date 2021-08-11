@@ -12,7 +12,7 @@
           应用问题反馈: http://www.shenmo.tech:420/?p=419
           APP建议: http://www.shenmo.tech:420/?p=422
           国际排名：http://distrowatch.com/table.php?distribution=deepin
-          
+
           商店官网: https://www.spark-app.store/
           所有的问题反馈换成这统一的入口
           社区反馈中心: https://www.deepinos.org/t/spark-feedback

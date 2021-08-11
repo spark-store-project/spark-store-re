@@ -20,9 +20,9 @@
         <q-tab-panels v-model="tab" animated class="bg-grey-1">
           <q-tab-panel name="downloads">
            <q-list>
-           <template v-for="task, index in $store.state.downloads.tasks" :key="task.name">
+           <template v-for="(task, gid) in $store.state.downloads.tasks" :key="gid">
              <!-- smart tricks, put seperator at top -->
-             <q-separator spaced v-if="index !=0"/>
+             <!-- <q-separator spaced v-if="index !=0"/> -->
              <q-item>
                <q-item-section avatar top>
                  <q-img :src="task.details.icon_url" width="38px" />
@@ -36,17 +36,17 @@
                    round
                    size="25px"
                    color="green-4"
-                   :value="task.progress"
+                   :value="task.aria2.completedLength / task.aria2.totalLength"
                  >
                    <div class="absolute-full flex flex-center">
-                     <q-badge color="white" text-color="green-4" :label="task.progressLabel" />
+                     <q-badge color="white" text-color="green-4" :label="(task.aria2.completedLength / task.aria2.totalLength* 100).toFixed(2) + '%'" />
                    </div>
                  </q-linear-progress>
                  <q-item-label caption lines="1">
-                   Download: {{task.downloadSpeed}} B/s
+                   Download: {{task.aria2.downloadSpeed}} B/s
                  </q-item-label>
                  <q-item-label caption lines="1">
-                   Upload: {{task.uploadSpeed}} B/s
+                   Upload: {{task.aria2.uploadSpeed}} B/s
                    感觉速度不够快? 设置中开启P2P下载
                  </q-item-label>
                  <q-item-label
