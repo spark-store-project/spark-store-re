@@ -39,14 +39,16 @@
                    :value="task.aria2.completedLength / task.aria2.totalLength"
                  >
                    <div class="absolute-full flex flex-center">
-                     <q-badge color="white" text-color="green-4" :label="(task.aria2.completedLength / task.aria2.totalLength* 100).toFixed(2) + '%'" />
+                     <q-badge color="white" text-color="green-4"
+                       :label="(task.aria2.completedLength / task.aria2.totalLength* 100).toFixed(2) + '%'"
+                     />
                    </div>
                  </q-linear-progress>
                  <q-item-label caption lines="1">
-                   Download: {{task.aria2.downloadSpeed}} B/s
+                   Download: {{ displaySpeed( task.aria2.downloadSpeed )}}
                  </q-item-label>
                  <q-item-label caption lines="1">
-                   Upload: {{task.aria2.uploadSpeed}} B/s
+                   Upload: {{ displaySpeed(task.aria2.uploadSpeed) }}
                    感觉速度不够快? 设置中开启P2P下载
                  </q-item-label>
                  <q-item-label
@@ -60,8 +62,15 @@
                </q-item-section>
                <q-item-section top side>
                  <div class="text-grey-8 q-gutter-xs">
-                   <q-btn class="gt-xs" size="12px" dense color="primary" :label="$t('Install')" />
-                   <q-btn class="gt-xs" size="12px" dense color="red-5" :label="$t('Delete')" />
+                   <q-btn class="gt-xs" size="12px"
+                     dense color="primary"
+                     :label="$t('Install')"
+                   />
+                   <q-btn
+                     class="gt-xs" size="12px"
+                     dense color="red-5" :label="$t('Delete')"
+                     @click="$store.dispatch('downloads/downloadTaskRemove',task.aria2.gid)"
+                   />
                    <q-btn size="12px" flat dense round icon="more_vert" />
                  </div>
                </q-item-section>
@@ -368,6 +377,17 @@ export default defineComponent({
       }
     },
     methods: {
+      displaySpeed: function(speed) {
+        if (speed < 1024) {
+          return speed + ' B/s';
+        } else if (speed < 1024*1024) {
+          return (speed/1024).toFixed(2) + ' KB/s';
+        } else if (speed < 1024*1024*1024) {
+          return (speed/1024/1024/1024).toFixed(2) + ' MB/s';
+        } else {
+          return (speed/1024/1024/1024/1024).toFixed(2) + ' GB/s';
+        }
+      },
     },
     mounted() {
     }

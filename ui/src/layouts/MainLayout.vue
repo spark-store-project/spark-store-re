@@ -24,7 +24,7 @@
                  to="/management/downloads"
           >
             <q-badge floating color="red">
-              {{$store.state.downloads.tasks.length}}
+              {{Object.keys($store.state.downloads.tasks).length}}
             </q-badge>
           </q-btn>
 
