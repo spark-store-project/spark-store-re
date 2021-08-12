@@ -55,7 +55,7 @@
                    lines="1"
                    class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase"
                  >
-                   <span class="cursor-pointer">
+                   <span @click="showInFolder(task)" >
                      {{$t('Open in Folder')}}
                    </span>
                  </q-item-label>
@@ -388,6 +388,13 @@ export default defineComponent({
           return (speed/1024/1024/1024/1024).toFixed(2) + ' GB/s';
         }
       },
+      showInFolder: function(task) {
+        let folder = task.aria2.dir;
+        // const {shell} = require('electron') // deconstructing assignment
+        // shell.showItemInFolder(folder) // Show the given file in a file manager. If possible, select the file.
+        // shell.openPath(folder) // Open the given file in the desktop's default manner.
+        console.log('Open in folder', task.aria2.dir);
+      }
     },
     mounted() {
     }
