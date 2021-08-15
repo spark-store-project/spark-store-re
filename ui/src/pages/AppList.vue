@@ -2,7 +2,7 @@
   <div class="">
     <q-list>
         <template
-            v-for="item in list"
+            v-for="item in appList"
             :key="item.tip"
         >
         <!--        单个应用模块-->
@@ -37,24 +37,23 @@ export default {
     name: "AppList",
     data() {
         return {
-            list: [],
+            appList: [],
             category: this.$route.params.category,
-            downloadContent: "DOWNLOAD",
-            source: "https://json.jerrywang.top",
-            imgSource: "https://cdn.jsdelivr.net/gh/Jerrywang959/jsonpng",
+            source: this.$store.state.appinfos.src_url,
+            imgSource: this.$store.state.appinfos.img_url,
         };
     },
     methods: {
         getInfo() {
-            axios
-                //39.106.2.2:38324
-                .get(
-                    `${this.source}/store/${this.category}/applist.json`
-                )
-                //applist.json 软件列表
-                .then((res) => {
-                    this.list = res.data;
-                });
+          let applist_url = `${this.source}/store/${this.category}/applist.json`;
+          //39.106.2.2:38324 applist.json 软件列表
+          axios.get(applist_url).then((res) => {
+            this.appList = res.data;
+            this.$store.commit('appinfos/addAppList', {
+              category: this.category,
+              appList: this.appList
+            });
+          });
         },
         GotoJson(pkgn) {
           let detailsUri=`${this.source}/store/${this.category}/${pkgn}/`;
@@ -64,10 +63,9 @@ export default {
         },
     },
     mounted() {
-        this.getInfo();
+      this.getInfo();
     },
     beforeCreate: function() {
-        document.body.className = 'light-body';
     },
 };
 </script>

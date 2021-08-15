@@ -23,34 +23,31 @@
                  icon="download"
                  to="/management/downloads"
           >
-            <q-badge floating color="red">
-              {{Object.keys($store.state.downloads.tasks).length}}
-            </q-badge>
+            <template v-if="taskLength()!=0">
+              <q-badge floating color="red">
+                {{taskLength()}}
+              </q-badge>
+            </template>
           </q-btn>
 
           <q-toolbar-title>
             <div class="q-px-lg">
                 <q-input class="native-window-no-drag text-center justify-center centers"
                   v-model="search"
-                  debounce="500"
+                  debounce="200"
                   filled
                   :placeholder="$t('Search')"
                 >
                   <template v-slot:prepend>
                     <q-icon name="search" />
                   </template>
-                  <q-menu fit>
-                    <q-list style="min-width: 100px">
-                      <q-item clickable>
-                        <q-item-section> AppName1-AppDescription-AppIcon </q-item-section>
-                      </q-item>
-                      <q-separator />
-                      <q-item clickable>
-                        <q-item-section> AppName2-AppDescription-AppIcon </q-item-section>
-                      </q-item>
-                      <q-separator />
-                      <q-item clickable>
-                        <q-item-section> AppName3-AppDescription-AppIcon </q-item-section>
+                  <q-menu fit :target="true" no-focus>
+                    <q-list
+                      style="min-width: 100px"
+                      v-for="result in searchApps(search)" :key="result.Pkgname"
+                    >
+                      <q-item clickable :to="getAppUrl(result)" >
+                        <q-item-section> {{ result.Name }} </q-item-section>
                       </q-item>
                     </q-list>
                   </q-menu>
@@ -74,7 +71,7 @@
     >
       <q-scroll-area style="height: calc(100% - 80px); margin-top: 80px; border-right: 1px solid #ddd">
         <q-list padding>
-          <template v-for="item in linksList" :key="item.title">
+          <template v-for="item in linksList()" :key="item.title">
             <q-item clickable
                     v-ripple
                     :to="item.link"
@@ -111,96 +108,16 @@
 </template>
 
 <script>
-const linksList = [
-  {
-    title: 'Games',
-    caption: 'Community Quasar projects',
-    icon: 'games',
-    link: '/list/games'
-  },
-  {
-    title: 'Network',
-    caption: 'network application',
-    icon: 'wifi',
-    link: '/list/network'
-  },
-  {
-    title: 'Chat',
-    caption: 'chat.quasar.dev',
-    icon: 'message',
-    link: '/list/chat'
-  },
-  {
-    title: 'Music',
-    caption: 'forum.quasar.dev',
-    icon: 'headphones',
-    link: '/list/music'
-  },
-  {
-    title: 'Video',
-    caption: '@quasarframework',
-    icon: 'movie',
-    link: '/list/video'
-  },
-  {
-    title: 'Graphics',
-    caption: '@QuasarFramework',
-    icon: 'image',
-    link: '/list/image_graphics'
-  },
-  {
-    title: 'Office',
-    caption: 'Community Quasar projects',
-    icon: 'work',
-    link: '/list/office'
-  },
-  {
-    title: 'Reading',
-    caption: 'Community Quasar projects',
-    icon: 'book',
-    link: '/list/reading'
-  },
-  {
-    title: 'Development',
-    caption: 'Community Quasar projects',
-    icon: 'coffee_maker',
-    link: '/list/development'
-  },
-  {
-    title: 'Tools',
-    caption: 'Community Quasar projects',
-    icon: 'handyman',
-    link: '/list/tools'
-  },
-  {
-    title: 'Beautify',
-    caption: 'Community Quasar projects',
-    icon: 'mood',
-    link: '/list/themes'
-  },
-  {
-    title: 'Others',
-    caption: 'Community Quasar projects',
-    icon: 'alt_route',
-    link: '/list/others'
-  },
-  {
-    title: 'Settings',
-    caption: 'Community Quasar projects',
-    icon: 'settings',
-    link: '/management/settings'
-  },
-];
 
 
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'MainLayout',
-
   components: {
   },
-
+  mounted() {
+  },
   setup () {
     const leftDrawerOpen = ref(false)
     const linkNavFn = function(steps) {
@@ -210,21 +127,51 @@ export default defineComponent({
       window.location.reload();
       // this.$router.go(this.$router.currentRoute);
     }
+    const taskLength = function() {
+      return Object.keys(this.$store.state.downloads.tasks).length;
+    }
+    const linksList = function() {
+      return this.$store.state.appinfos.appCategories;
+    }
+    const toggleLeftDrawer = function() {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+    }
     const search = ref("");
+    const searchApps = function(input) {
+      let search = input.toLowerCase();
+      let searchList = [];
+      this.$store.state.appinfos.appCategories.forEach(item => {
+        item.json_apps.forEach(app => {
+          console.log(app);
+          if( app.Author.toLowerCase().includes(search)
+           || app.Name.toLowerCase().includes(search)
+           || app.More.toLowerCase().includes(search)
+           || app.Website.toLowerCase().includes(search)
+           || app.Pkgname.toLowerCase().includes(search)
+           || app.Contributor.toLowerCase().includes(search)
+          ) {
+            searchList.splice(0,0,app);
+          }
+        });
+      });
+      return searchList;
+    };
+    const getAppUrl = function(app)  {
+      let detailsUri=`${this.$store.state.appinfos.src_url}/store/${app.category}/${app.Pkgname}/`;
+      let base64encode= window.btoa(detailsUri);
+      return `/details/${base64encode}`;
+    };
     return {
-      linksList,
       linkNavFn,
+      linksList,
       pageReloadFn,
       search,
+      searchApps,
+      getAppUrl,
       leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
+      taskLength,
+      toggleLeftDrawer,
     }
-  },
-  computed: {
-  },
-  mounted() {
   },
 })
 </script>

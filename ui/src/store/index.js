@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 
 import settings from './module-settings'
 import downloads from './module-downloads'
+import appinfos from './module-appinfos'
 
 /*
  * If not building with SSR mode, you can
@@ -39,6 +40,7 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       settings,
       downloads,
+      appinfos,
     },
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only

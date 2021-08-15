@@ -19,6 +19,10 @@
 
         <q-tab-panels v-model="tab" animated class="bg-grey-1">
           <q-tab-panel name="downloads">
+           <template v-if="Object.keys($store.state.downloads.tasks).length == 0">
+             <q-icon name="info"/>
+             You have an empty download list. Check out some new apps now!
+           </template>
            <q-list>
            <template v-for="(task, gid) in $store.state.downloads.tasks" :key="gid">
              <!-- smart tricks, put seperator at top -->
