@@ -13,7 +13,7 @@
                   no-spinner
                   width="56px"
                   height="56px"
-                  :src="`${imgSource}/store/${category}/${item.Pkgname}/icon.png`"
+                  :src="`${source}/store/${category}/${item.Pkgname}/icon.png`"
                   alt="icon"
                   @click="GotoJson(item.Pkgname)"
               />
@@ -40,7 +40,6 @@ export default {
             appList: [],
             category: this.$route.params.category,
             source: this.$store.state.appinfos.src_url,
-            imgSource: this.$store.state.appinfos.img_url,
         };
     },
     methods: {
