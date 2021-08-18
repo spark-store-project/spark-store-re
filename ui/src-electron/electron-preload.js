@@ -15,3 +15,23 @@
  *     doAThing: () => {}
  *   })
  */
+ import { contextBridge, remote } from 'electron'
+
+ contextBridge.exposeInMainWorld('spk', {
+   windowActions: function(act) {
+      let win = remote.getCurrentWindow();
+      if(act == "close") {
+        win.close();
+      } else if (act == "minimize") {
+        win.minimize();
+      } else if (act == "maximize") {
+        if(!win.isMaximized()) {
+          win.maximize();
+        } else {
+          win.unmaximize();
+        }
+      } else {
+        console.log("bad usage of windowActions");
+      }
+    }
+ })

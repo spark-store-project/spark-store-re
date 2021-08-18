@@ -29,6 +29,12 @@
               </q-badge>
             </template>
           </q-btn>
+          <q-btn class="native-window-no-drag"
+                 color="primary" flat round
+                 icon="upload"
+                 to="/management/packaging"
+          >
+          </q-btn>
 
           <q-toolbar-title>
             <div class="q-px-lg">
@@ -55,12 +61,21 @@
               </div>
           </q-toolbar-title>
 
-          <q-btn class="native-window-no-drag q-px-lg"
-                 color="red-5" push
-                 icon="upload"
-                 to="/management/packaging"
-          >
-          </q-btn>
+          <q-btn class="native-window-no-drag"
+                 color="primary" flat round
+                 icon="remove"
+                 @click="windowActions('minimize')"
+          />
+          <q-btn class="native-window-no-drag"
+                 color="primary" flat round
+                 icon="web_asset"
+                 @click="windowActions('maximize')"
+          />
+          <q-btn class="native-window-no-drag"
+                 color="primary" flat round
+                 icon="close"
+                 @click="windowActions('close')"
+          />
         </q-toolbar>
     </q-header>
     <q-drawer
@@ -108,8 +123,6 @@
 </template>
 
 <script>
-
-
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -119,6 +132,9 @@ export default defineComponent({
   mounted() {
   },
   setup () {
+    const windowActions = function(act) {
+      window.spk.windowActions(act);
+    }
     const leftDrawerOpen = ref(false)
     const linkNavFn = function(steps) {
       this.$router.go(steps);
@@ -131,7 +147,11 @@ export default defineComponent({
       return Object.keys(this.$store.state.downloads.tasks).length;
     }
     const linksList = function() {
-      return this.$store.state.appinfos.appCategories;
+      let list = [
+        ...this.$store.state.appinfos.appCategories,
+        ...this.$store.state.appinfos.managementLinks,
+      ];
+      return list;
     }
     const toggleLeftDrawer = function() {
         leftDrawerOpen.value = !leftDrawerOpen.value
@@ -142,8 +162,9 @@ export default defineComponent({
       let searchList = [];
       this.$store.state.appinfos.appCategories.forEach(item => {
         item.json_apps.forEach(app => {
-          console.log(app);
-          if( app.Author.toLowerCase().includes(search)
+          if(search == "") return;
+          if( false
+           || app.Author.toLowerCase().includes(search)
            || app.Name.toLowerCase().includes(search)
            || app.More.toLowerCase().includes(search)
            || app.Website.toLowerCase().includes(search)
@@ -171,6 +192,7 @@ export default defineComponent({
       leftDrawerOpen,
       taskLength,
       toggleLeftDrawer,
+      windowActions,
     }
   },
 })
