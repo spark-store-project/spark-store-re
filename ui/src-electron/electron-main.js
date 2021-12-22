@@ -7,6 +7,10 @@ try {
   }
 } catch (_) { }
 
+const localpath = path.join(app.getPath('userData'), '/')
+
+let childpids = [];
+
 let mainWindow
 
 function startService() {
@@ -14,13 +18,54 @@ function startService() {
    * listen on a local port (7800) and
    * serve on a websocket address.
    * The process handles:
-   * 1. Implement Downloads
-   * 2. Implement App Instllation, desktop files, exec etc
-   * 3. Handle App Deletion and Others
+   * 1. Implement downloads
+   * 2. Implement app instllation, desktop files, exec etc
+   * 3. Handle app deletion
+   * 4. Handle all other native ability requires trust
    */
+    // const appRootDir = require('app-root-dir').get();
+    console.log("info: main PID is: ", process.pid);
+    console.log("info: platform is: ", process.platform);
+    console.log("info: localpath is: ", localpath);
+    spwanDownloader();
+}
+function spwanDownloader() {
+    /*
+     * 1. start the downloader aria2c
+     * 2. close the downloader on app exit
+     * 3. TODO consider detach the downloader for background mode
+     * */
+    const process = require('process');
+    const spawn = require( 'child_process' ).spawn;
+    const child = spawn('aria2c', ['--enable-rpc', '-d', localpath]);
+    console.log("info: aria2c pid is :", child.pid);
+    childpids.push(child.pid);
+    process.on('exit', (code)=> {
+        for(let pid of childpids) {
+            process.kill(pid, 'SIGTERM');
+            console.log("info: main SIGTERM child pid", pid);
+        }
+    });
+    child.on('error', (code)=> {
+        console.log( `info: aria2c: error exit: with ret code ${code}` );
+    });
+    child.on('exit', (code)=> {
+        console.log( `info: aria2c: exit: with ret code ${code}` );
+        if(code == 1) {
+          for(let pid of childpids) {
+              process.kill(pid, 'SIGTERM');
+              console.log("info: main SIGTERM child pid", pid);
+          }
+          spwanDownloader();
+        }
+    });
+    child.stdout.on( 'data', data => {
+        console.log( `info: aria2c: stdout: ${data}` );
+    });
 }
 
 function createWindow () {
+  startService()
   /**
    * Initial window options
    */
